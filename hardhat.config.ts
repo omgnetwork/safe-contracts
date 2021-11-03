@@ -110,7 +110,6 @@ if (NODE_URL) {
   userConfig.networks!!.custom = {
     ...sharedNetworkConfig,
     url: NODE_URL,
-    chainId: 28,
   }
 }
 export default userConfig
