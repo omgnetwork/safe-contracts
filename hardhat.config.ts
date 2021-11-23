@@ -23,11 +23,14 @@ const DEFAULT_MNEMONIC =
 
 const sharedNetworkConfig: HttpNetworkUserConfig = {};
 if (PK) {
+  console.log('yolo')
   sharedNetworkConfig.accounts = [PK];
+  sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
 } else {
   sharedNetworkConfig.accounts = {
     mnemonic: MNEMONIC || DEFAULT_MNEMONIC,
   };
+  sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
 }
 
 if (["mainnet", "rinkeby", "kovan", "goerli"].includes(argv.network) && INFURA_KEY === undefined) {
@@ -61,7 +64,8 @@ const userConfig: HardhatUserConfig = {
     hardhat: {
       allowUnlimitedContractSize: true,
       blockGasLimit: 100000000,
-      gas: 100000000
+      gas: 100000000,
+      chainId: Number(process.env.CHAIN_ID),
     },
     mainnet: {
       ...sharedNetworkConfig,
@@ -94,6 +98,12 @@ const userConfig: HardhatUserConfig = {
     boba_rinkeby: {
       ...sharedNetworkConfig,
       url: `https://rinkeby.boba.network/`,
+      chainId: Number(process.env.CHAIN_ID),
+    },
+    boba: {
+      ...sharedNetworkConfig,
+      url: `https://mainnet.boba.network/`,
+      chainId: Number(process.env.CHAIN_ID),
     },
   },
   namedAccounts: {
@@ -110,6 +120,7 @@ if (NODE_URL) {
   userConfig.networks!!.custom = {
     ...sharedNetworkConfig,
     url: NODE_URL,
+    chainId: Number(process.env.CHAIN_ID),
   }
 }
 export default userConfig
