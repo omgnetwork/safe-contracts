@@ -3,7 +3,7 @@ import "@nomiclabs/hardhat-waffle";
 import "solidity-coverage";
 import "hardhat-deploy";
 import dotenv from "dotenv";
-import type { HardhatUserConfig, HttpNetworkUserConfig } from "hardhat/types";
+import type { HardhatConfig, HardhatUserConfig, HttpNetworkUserConfig } from "hardhat/types";
 import yargs from "yargs";
 
 const argv = yargs
@@ -25,12 +25,12 @@ const sharedNetworkConfig: HttpNetworkUserConfig = {};
 if (PK) {
   console.log('yolo')
   sharedNetworkConfig.accounts = [PK];
-  sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
+  //sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
 } else {
   sharedNetworkConfig.accounts = {
     mnemonic: MNEMONIC || DEFAULT_MNEMONIC,
   };
-  sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
+  //sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
 }
 
 if (["mainnet", "rinkeby", "kovan", "goerli"].includes(argv.network) && INFURA_KEY === undefined) {
@@ -47,6 +47,7 @@ const primarySolidityVersion = SOLIDITY_VERSION || "0.7.6"
 const soliditySettings = !!SOLIDITY_SETTINGS ? JSON.parse(SOLIDITY_SETTINGS) : undefined
 
 const userConfig: HardhatUserConfig = {
+  deterministicDeployment: {},
   paths: {
     artifacts: "build/artifacts",
     cache: "build/cache",
@@ -65,7 +66,7 @@ const userConfig: HardhatUserConfig = {
       allowUnlimitedContractSize: true,
       blockGasLimit: 100000000,
       gas: 100000000,
-      chainId: Number(process.env.CHAIN_ID),
+      //chainId: Number(process.env.CHAIN_ID),
     },
     mainnet: {
       ...sharedNetworkConfig,
