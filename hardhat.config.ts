@@ -23,7 +23,6 @@ const DEFAULT_MNEMONIC =
 
 const sharedNetworkConfig: HttpNetworkUserConfig = {};
 if (PK) {
-  console.log('yolo')
   sharedNetworkConfig.accounts = [PK];
   //sharedNetworkConfig.chainId = Number(process.env.CHAIN_ID);
 } else {
@@ -47,7 +46,20 @@ const primarySolidityVersion = SOLIDITY_VERSION || "0.7.6"
 const soliditySettings = !!SOLIDITY_SETTINGS ? JSON.parse(SOLIDITY_SETTINGS) : undefined
 
 const userConfig: HardhatUserConfig = {
-  deterministicDeployment: {},
+  deterministicDeployment: {
+    "28": {
+      factory: "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7",
+      deployer: "0x122816e7A7AeB40601d0aC0DCAA8402F7aa4cDfA",
+      funding: "10000000000",
+      signedTx: "0xf8a5808504a817c800830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf35ca0b501137727a3f33f5431a78a06428d918aa7cf1680ccb5bc1e4574dc32425013a06c00ad38c5f6327b995971e8abe8446fc6425f12c53b4d7de089524b7bb4acb1",
+    },
+    "288": {
+      factory: "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7",
+      deployer: "0x3C99545602fF72723e813DC31F696cD893E5E525",
+      funding: "10000000000",
+      signedTx: "0xf8a7808504a817c800830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf3820264a02836f16b67fdf74d02d4d9548495cffd739f509b9bc4b8fdffd2611c38489642a07864709b3f830a661897f4d60d98efc26754f44be447cf35a65ff92a06cb7bd0",
+    }
+  },
   paths: {
     artifacts: "build/artifacts",
     cache: "build/cache",
