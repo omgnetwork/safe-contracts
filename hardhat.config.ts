@@ -47,7 +47,23 @@ const soliditySettings = !!SOLIDITY_SETTINGS ? JSON.parse(SOLIDITY_SETTINGS) : u
 
 const deterministicDeployment = CUSTOM_DETERMINISTIC_DEPLOYMENT == "true" ?
   (network: string) => {
-    const info = getSingletonFactoryInfo(parseInt(network))
+    // 288
+    const info = {
+      gasPrice: 20000000000,
+      gasLimit: 100000,
+      signerAddress: "0xE1CB04A0fA36DdD16a06ea828007E35e1a3cBC37",
+      transaction: "0xf8a7808504a817c800830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf3820264a02836f16b67fdf74d02d4d9548495cffd739f509b9bc4b8fdffd2611c38489642a07864709b3f830a661897f4d60d98efc26754f44be447cf35a65ff92a06cb7bd0",
+      address: "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7"
+    }
+
+    // 28
+    // const info = {
+    //   gasPrice: 20000000000,
+    //   gasLimit: 100000,
+    //   signerAddress: "0xE1CB04A0fA36DdD16a06ea828007E35e1a3cBC37",
+    //   transaction: "0xf8a5808504a817c800830186a08080b853604580600e600039806000f350fe7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe03601600081602082378035828234f58015156039578182fd5b8082525050506014600cf35ca0b501137727a3f33f5431a78a06428d918aa7cf1680ccb5bc1e4574dc32425013a06c00ad38c5f6327b995971e8abe8446fc6425f12c53b4d7de089524b7bb4acb1",
+    //   address: "0x914d7Fec6aaC8cd542e72Bca78B30650d45643d7"
+    // }
     if (!info) return undefined
     return {
       factory: info.address,
@@ -120,7 +136,17 @@ const userConfig: HardhatUserConfig = {
     fantomTestnet: {
       ...sharedNetworkConfig,
       url: `https://rpc.testnet.fantom.network/`,
-    }
+    },
+    boba_rinkeby: {
+      ...sharedNetworkConfig,
+      url: `https://rinkeby.boba.network/`,
+      chainId: Number(process.env.CHAIN_ID),
+    },
+    boba: {
+      ...sharedNetworkConfig,
+      url: `https://mainnet.boba.network/`,
+      chainId: Number(process.env.CHAIN_ID),
+    },
   },
   deterministicDeployment,
   namedAccounts: {
